@@ -664,10 +664,11 @@ class Option:
             if self.choices is None:
                 raise OptionError(
                     "must supply a list of choices for type 'choice'", self)
-            elif not isinstance(self.choices, (tuple, list)):
+            elif self.choices__class__.__name__ not in ['tuple', 'list',
+                                                        'dict_keys', 'set']:
                 raise OptionError(
-                    "choices must be a list of strings ('%s' supplied)"
-                    % str(type(self.choices)).split("'")[1], self)
+                    "choices must be a list of strings ('%s' supplied)" %
+                    self.choices__class__.__name__)
         elif self.choices is not None:
             raise OptionError(
                 "must not supply choices for type %r" % self.type, self)
